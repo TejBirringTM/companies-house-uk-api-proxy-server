@@ -1,0 +1,18 @@
+# Node.js Dependencies
+node_modules/
+
+# Environment files
+.env
+
+# Temporary system files
+.DS_Store
+
+# Test reports
+coverage/
+
+# Logs
+logs/
+*.log
+
+# Build output
+dist/

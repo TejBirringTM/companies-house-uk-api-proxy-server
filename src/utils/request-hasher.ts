@@ -104,8 +104,8 @@ export class RequestHasher {
 
     static serialiseRequest<
         P extends core.ParamsDictionary = core.ParamsDictionary,
-        ResBody = any,
-        ReqBody = any,
+        ResBody = unknown,
+        ReqBody = unknown,
         ReqQuery extends core.Query = core.Query,
     >(req: Request<P, ResBody, ReqBody, ReqQuery>, options: RequestHashOptions = {}) {
         const mergedOptions = { ...defaultOptions, ...options };
@@ -144,8 +144,8 @@ export class RequestHasher {
 
     static hashRequest<
         P extends core.ParamsDictionary = core.ParamsDictionary,
-        ResBody = any,
-        ReqBody = any,
+        ResBody = unknown,
+        ReqBody = unknown,
         ReqQuery extends core.Query = core.Query,
     >(req: Request<P, ResBody, ReqBody, ReqQuery>, options: RequestHashOptions = {}) {
         const serialised = RequestHasher.serialiseRequest(req, options);

@@ -4,11 +4,13 @@ import helmet from 'helmet';
 import morgan from 'morgan';
 import rateLimit from 'express-rate-limit';
 import config, { isDevelopment } from './config';
-import { errorHandler } from './middlewares/error.middleware';
+import { errorHandler, notFoundHandler } from './middlewares/error.middleware';
 import path from 'path';
 import fs from 'fs';
 
 const app = express();
+app.set('trust proxy', 1 /* number of proxies between user and server */);
+
 const ALL_ROUTERS_PATH = path.join(__dirname, 'routes');
 const ALL_ROUTES_PREFIX = `/api/v${config.version.major}`;
 
@@ -43,7 +45,7 @@ app.use(
 );
 
 // Logging middleware
-app.use(morgan(config.logLevel));
+app.use(morgan('combined'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -65,6 +67,7 @@ routers.forEach(router => {
 console.log(`✅ Loaded all routers (${routers.length} in total)`);
 
 // Error handling
+app.use(notFoundHandler);
 app.use(errorHandler);
 
 // Start server

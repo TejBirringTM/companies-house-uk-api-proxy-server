@@ -5,8 +5,8 @@ import { RequestHasher } from '../utils/request-hasher';
 
 interface CacheOptions<
     P extends core.ParamsDictionary = core.ParamsDictionary,
-    ResBody = any,
-    ReqBody = any,
+    ResBody = unknown,
+    ReqBody = unknown,
     ReqQuery extends core.Query = core.Query,
 > {
     ttl?: number;
@@ -25,8 +25,8 @@ interface CacheOptions<
 
 function generateCacheControl<
     P extends core.ParamsDictionary = core.ParamsDictionary,
-    ResBody = any,
-    ReqBody = any,
+    ResBody = unknown,
+    ReqBody = unknown,
     ReqQuery extends core.Query = core.Query,
 >(options: CacheOptions<P, ResBody, ReqBody, ReqQuery>): string {
     const directives: string[] = [];
@@ -58,8 +58,8 @@ function generateCacheControl<
 
 export const cacheHandler = <
     P extends core.ParamsDictionary = core.ParamsDictionary,
-    ResBody = any,
-    ReqBody = any,
+    ResBody = unknown,
+    ReqBody = unknown,
     ReqQuery extends core.Query = core.Query,
 >(
     options: CacheOptions<P, ResBody, ReqBody, ReqQuery> = {},

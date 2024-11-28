@@ -11,7 +11,7 @@ export interface ValidationSchema {
 type ValidatedRequestHandler<Schema extends ValidationSchema, ResponseBody> = RequestHandler<
     Schema['params'] extends z.ZodType ? z.infer<Schema['params']> : core.ParamsDictionary,
     ResponseBody,
-    Schema['body'] extends z.ZodType ? z.infer<Schema['body']> : any,
+    Schema['body'] extends z.ZodType ? z.infer<Schema['body']> : unknown,
     Schema['query'] extends z.ZodType ? z.infer<Schema['query']> : core.Query
 >;
 

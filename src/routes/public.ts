@@ -1,6 +1,9 @@
 import { Router } from 'express';
-import { z } from 'zod';
 import { addValidatedRoute } from './utils/validation';
+import {
+    advancedSearchQuerySchema,
+    companiesHouseUkService,
+} from '../services/external/companies-house-uk';
 import { cacheHandler } from '../middlewares/cache.middleware';
 
 const router = Router();
@@ -9,20 +12,27 @@ router.get('/health', (req, res) => {
     res.json({ status: 'ok' });
 });
 
+router.get('/my-ip', (req, res) => {
+    res.json({
+        ip: req.ip,
+    });
+});
+
 addValidatedRoute(
     router,
-    'post',
-    '/test',
+    'get',
+    '/companies-house-uk/advanced-search',
     {
-        body: z.object({
-            key: z.string(),
-        }),
+        query: advancedSearchQuerySchema,
     },
     cacheHandler(),
-    (req, res) => {
-        res.json({
-            notKey: `not ${req.body.key}!`,
-        });
+    async (req, res, next) => {
+        try {
+            const responseBody = await companiesHouseUkService.advancedSearch(req.query);
+            res.status(200).send(responseBody);
+        } catch (e) {
+            next(e);
+        }
     },
 );
 

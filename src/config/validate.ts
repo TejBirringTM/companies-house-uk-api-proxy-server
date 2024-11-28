@@ -1,8 +1,9 @@
 import { z } from 'zod';
 import { envSchema } from './schema';
-import { ConfigError } from './types';
 import { parse as parseVersion } from 'semver';
 import pkg from '../../package.json';
+import { ConfigError } from '../errors';
+import { extractErrorMessagesFromZodError } from '../utils/error-messages';
 
 export function validateEnv() {
     try {
@@ -21,12 +22,10 @@ export function validateEnv() {
         return Object.freeze(env);
     } catch (error) {
         if (error instanceof z.ZodError) {
-            const messages = error.errors.map(e => {
-                const field = e.path.join('.');
-                return `${field}: ${e.message}`;
-            });
-
-            throw new ConfigError('❌ Environment variables do not follow schema', messages);
+            throw new ConfigError(
+                '❌ Environment variables do not follow schema',
+                extractErrorMessagesFromZodError(error),
+            );
         }
 
         throw error;

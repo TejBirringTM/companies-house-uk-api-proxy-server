@@ -37,6 +37,10 @@ export const envSchema = z.object({
         .default('true'),
 
     // Add more environment variables here...
+    COMPANIES_HOUSE_UK_BASE_URL: z.string().url().describe(''),
+    COMPANIES_HOUSE_UK_API_KEY: z.string().describe(''),
+    COMPANIES_HOUSE_RATE_LIMIT_WINDOW_MS: z.string().describe('').transform(Number),
+    COMPANIES_HOUSE_RATE_LIMIT_MAX: z.string().describe('').transform(Number),
 });
 
 export type Env = z.infer<typeof envSchema>;

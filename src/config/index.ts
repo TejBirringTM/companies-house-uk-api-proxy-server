@@ -61,6 +61,16 @@ const config = {
         minor: version.minor,
         patch: version.patch,
     },
+    external: {
+        companiesHouseUk: {
+            baseUrl: env.COMPANIES_HOUSE_UK_BASE_URL,
+            apiKey: env.COMPANIES_HOUSE_UK_API_KEY,
+            rateLimit: {
+                windowMs: env.COMPANIES_HOUSE_RATE_LIMIT_WINDOW_MS,
+                max: env.COMPANIES_HOUSE_RATE_LIMIT_MAX,
+            },
+        },
+    },
     // Add other configuration properties here...
 } as const;
 
